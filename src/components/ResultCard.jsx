@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { LEVELS } from '../lib/analyzer.js'
+import { buildWarning, whatsappLink } from '../lib/share.js'
 
 const ICONS = { safe: '✅', suspicious: '⚠️', danger: '🚨' }
 
@@ -29,6 +31,22 @@ function Gauge({ score, level }) {
 export default function ResultCard({ result }) {
   const { score, level, flags } = result
   const info = LEVELS[level]
+  const [copied, setCopied] = useState(false)
+  const warning = buildWarning(result)
+
+  async function share() {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'ScamShield warning', text: warning })
+        return
+      } catch {
+        // User cancelled or share failed; fall back to copying.
+      }
+    }
+    await navigator.clipboard.writeText(warning)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <section className={`result result-${level}`} aria-live="polite">
@@ -71,6 +89,22 @@ export default function ResultCard({ result }) {
           <li key={a}>{a}</li>
         ))}
       </ol>
+
+      {level !== 'safe' && (
+        <div className="share">
+          <p>
+            <strong>Protect someone you love.</strong> Send this warning to family members who might get the same message.
+          </p>
+          <div className="actions">
+            <a className="button whatsapp" href={whatsappLink(warning)} target="_blank" rel="noreferrer">
+              Share on WhatsApp
+            </a>
+            <button type="button" onClick={share}>
+              {copied ? 'Copied ✓' : 'Share / copy warning'}
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
