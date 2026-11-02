@@ -6,6 +6,16 @@ Built for **Next Byte Hacks V5**.
 
 **🔗 Live demo: https://shineyrbl-byte.github.io/scamshield/**
 
+## Screenshots
+
+| Instant verdict | Plain-language reasons |
+| --- | --- |
+| ![Scam check](docs/screenshots/1-scam-check.jpg) | ![Warning signs](docs/screenshots/2-warning-signs.jpg) |
+| **Next steps + warn your family** | **Hindi interface** |
+| ![Advice and share](docs/screenshots/3-advice-and-share.jpg) | ![Hindi](docs/screenshots/4-hindi.jpg) |
+
+![Spot the scam quiz](docs/screenshots/5-quiz.jpg)
+
 ## The problem
 
 Online fraud is exploding. Fake KYC updates, parcel "customs fees", work-from-home job offers and "digital arrest" calls drain people's savings every day. The people hit hardest, elderly parents and first-time internet users, are the least able to tell a fake message from a real one, and often have no one to ask in the moment.
