@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { LEVELS } from '../lib/analyzer.js'
+import { flagText, levelInfo, ui } from '../lib/i18n.js'
 import { buildWarning, whatsappLink } from '../lib/share.js'
 import Highlighted from './Highlighted.jsx'
 
 const ICONS = { safe: '✅', suspicious: '⚠️', danger: '🚨' }
 
-function Gauge({ score, level }) {
+function Gauge({ score, level, label }) {
   const r = 52
   const c = 2 * Math.PI * r
   return (
@@ -23,17 +23,18 @@ function Gauge({ score, level }) {
       </svg>
       <div className="gauge-text">
         <strong>{score}</strong>
-        <span>/ 100 risk</span>
+        <span>{label}</span>
       </div>
     </div>
   )
 }
 
-export default function ResultCard({ result, text }) {
+export default function ResultCard({ result, text, lang }) {
   const { score, level, flags } = result
-  const info = LEVELS[level]
+  const info = levelInfo(level, lang)
+  const t = ui(lang)
   const [copied, setCopied] = useState(false)
-  const warning = buildWarning(result)
+  const warning = buildWarning(result, lang)
 
   async function share() {
     if (navigator.share) {
@@ -52,32 +53,30 @@ export default function ResultCard({ result, text }) {
   return (
     <section className={`result result-${level}`} aria-live="polite">
       <div className="result-head">
-        <Gauge score={score} level={level} />
+        <Gauge score={score} level={level} label={t.risk} />
         <div>
           <p className="verdict">
             <span aria-hidden="true">{ICONS[level]}</span> {info.label}
           </p>
           <p className="muted">
-            {flags.length
-              ? `We found ${flags.length} warning sign${flags.length > 1 ? 's' : ''}.`
-              : 'We found no common warning signs.'}
+            {flags.length ? t.foundSigns(flags.length) : t.noSigns}
           </p>
         </div>
       </div>
 
       {flags.length > 0 && (
         <>
-          <h3>Suspicious parts of the message</h3>
+          <h3>{t.suspiciousParts}</h3>
           <Highlighted text={text} flags={flags} />
-          <h3>Why we think so</h3>
+          <h3>{t.why}</h3>
           <ul className="flags">
             {flags.map((f) => (
               <li key={f.id} className={f.weight >= 25 ? 'flag flag-high' : 'flag'}>
-                <p className="flag-title">{f.title}</p>
-                <p className="flag-explain">{f.explain}</p>
+                <p className="flag-title">{flagText(f, lang).title}</p>
+                <p className="flag-explain">{flagText(f, lang).explain}</p>
                 {f.match && (
                   <p className="flag-match">
-                    Found: <mark>“{f.match}”</mark>
+                    {t.found} <mark>“{f.match}”</mark>
                   </p>
                 )}
               </li>
@@ -86,7 +85,7 @@ export default function ResultCard({ result, text }) {
         </>
       )}
 
-      <h3>What you should do</h3>
+      <h3>{t.whatToDo}</h3>
       <ol className="advice">
         {info.advice.map((a) => (
           <li key={a}>{a}</li>
@@ -96,14 +95,14 @@ export default function ResultCard({ result, text }) {
       {level !== 'safe' && (
         <div className="share">
           <p>
-            <strong>Protect someone you love.</strong> Send this warning to family members who might get the same message.
+            <strong>{t.protect}</strong> {t.protectText}
           </p>
           <div className="actions">
             <a className="button whatsapp" href={whatsappLink(warning)} target="_blank" rel="noreferrer">
-              Share on WhatsApp
+              {t.shareWhatsapp}
             </a>
             <button type="button" onClick={share}>
-              {copied ? 'Copied ✓' : 'Share / copy warning'}
+              {copied ? t.copied : t.shareCopy}
             </button>
           </div>
         </div>

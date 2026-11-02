@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { analyze } from './lib/analyzer.js'
 import ResultCard from './components/ResultCard.jsx'
 import { EXAMPLES } from './lib/examples.js'
+import { LANGS, ui } from './lib/i18n.js'
 
 export default function App() {
   const [text, setText] = useState('')
   const [result, setResult] = useState(null)
+  const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en')
+  const t = ui(lang)
+
+  useEffect(() => {
+    localStorage.setItem('lang', lang)
+    document.documentElement.lang = lang
+  }, [lang])
 
   function check(e) {
     e.preventDefault()
@@ -16,20 +24,33 @@ export default function App() {
   return (
     <div className="app">
       <header className="hero">
+        <div className="lang-switch" role="group" aria-label="Language">
+          {Object.entries(LANGS).map(([code, name]) => (
+            <button
+              key={code}
+              type="button"
+              className={lang === code ? 'active' : ''}
+              aria-pressed={lang === code}
+              onClick={() => setLang(code)}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
         <h1>
           <span aria-hidden="true">🛡️</span> ScamShield
         </h1>
-        <p>Got a strange SMS, WhatsApp message, email or link? Paste it below and we'll tell you if it looks like a scam, in plain language.</p>
+        <p>{t.tagline}</p>
       </header>
 
       <main>
         <form className="checker" onSubmit={check}>
-          <label htmlFor="msg">Suspicious message or link</label>
+          <label htmlFor="msg">{t.inputLabel}</label>
           <textarea
             id="msg"
             rows={6}
             value={text}
-            placeholder="e.g. Dear customer, your SBI account will be blocked today. Update KYC now: http://sbi-kyc.xyz"
+            placeholder={t.placeholder}
             onChange={(e) => {
               setText(e.target.value)
               setResult(null)
@@ -37,7 +58,7 @@ export default function App() {
           />
           <div className="actions">
             <button type="submit" className="primary" disabled={!text.trim()}>
-              Check message
+              {t.check}
             </button>
             {text && (
               <button
@@ -48,13 +69,13 @@ export default function App() {
                   setResult(null)
                 }}
               >
-                Clear
+                {t.clear}
               </button>
             )}
           </div>
 
           <div className="examples">
-            <p className="muted">No message handy? Try an example:</p>
+            <p className="muted">{t.tryExample}</p>
             <div className="chips">
               {EXAMPLES.map((ex) => (
                 <button
@@ -73,12 +94,12 @@ export default function App() {
           </div>
         </form>
 
-        {result && <ResultCard result={result} text={text} />}
+        {result && <ResultCard result={result} text={text} lang={lang} />}
       </main>
 
       <footer>
-        <p>🔒 Private by design: your message is checked on your device and never uploaded anywhere.</p>
-        <p className="muted">ScamShield gives guidance, not guarantees. When in doubt, contact the organisation directly.</p>
+        <p>{t.privacy}</p>
+        <p className="muted">{t.disclaimer}</p>
       </footer>
     </div>
   )

@@ -1,18 +1,15 @@
-import { LEVELS } from './analyzer.js'
+import { flagText, levelInfo, ui } from './i18n.js'
 
-export function buildWarning(result) {
+export function buildWarning(result, lang = 'en') {
   const { score, level, flags } = result
-  const lines = [
-    `🛡️ ScamShield check: ${LEVELS[level].label.toUpperCase()} (risk ${score}/100)`,
-  ]
+  const t = ui(lang)
+  const lines = [`🛡️ ${t.warnHeader}: ${levelInfo(level, lang).label.toUpperCase()} (${score}/100)`]
   if (flags.length) {
-    lines.push('', 'Warning signs:')
-    for (const f of flags.slice(0, 5)) lines.push(`• ${f.title}`)
+    lines.push('', t.warnSigns)
+    for (const f of flags.slice(0, 5)) lines.push(`• ${flagText(f, lang).title}`)
   }
-  if (level !== 'safe') {
-    lines.push('', 'If you get a message like this: do not click links, never share OTP/PIN, and never pay any "fee".')
-  }
-  lines.push('', `Check messages yourself: ${window.location.origin}${window.location.pathname}`)
+  if (level !== 'safe') lines.push('', t.warnTip)
+  lines.push('', `${t.warnLink} ${window.location.origin}${window.location.pathname}`)
   return lines.join('\n')
 }
 

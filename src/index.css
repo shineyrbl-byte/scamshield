@@ -149,3 +149,8 @@ a.whatsapp:hover { background: #1ebe5a; }
 
 .highlighted { margin: 0; padding: 12px 14px; background: var(--bg); border-radius: 10px; white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; }
 .highlighted mark { background: color-mix(in srgb, var(--danger) 25%, transparent); cursor: help; }
+
+.hero { position: relative; }
+.lang-switch { display: flex; gap: 4px; justify-content: flex-end; margin-bottom: 8px; }
+.lang-switch button { font-size: 0.8rem; padding: 4px 12px; border-radius: 999px; }
+.lang-switch button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
