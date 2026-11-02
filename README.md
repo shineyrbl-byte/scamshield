@@ -19,6 +19,9 @@ Online fraud is exploding. Fake KYC updates, parcel "customs fees", work-from-ho
 - **Clear next steps**, including India's cybercrime helpline (1930) and reporting portals.
 - **Warn your family**: share a ready-made warning on WhatsApp in one tap.
 - **One-tap examples** of the most common scams for learning and demos.
+- **Screenshot upload**: can't copy text from WhatsApp? Upload a screenshot and the text is read on your device (OCR, English + Hindi).
+- **English and हिन्दी**: detects scams written in Hindi, Hinglish and English, and the whole interface can switch to Hindi.
+- **Spot the Scam quiz**: 8 real-world messages (scams and genuine ones) that teach people to recognise the warning signs themselves.
 - **100% private**: everything runs in the browser. Messages are never uploaded.
 
 ## Scam types detected
@@ -58,7 +61,7 @@ A brand name on its own (e.g. "HDFC") never raises the score; it only counts alo
 
 ## Tech stack
 
-React 19 · Vite · plain CSS (dark mode, mobile-first, large type) · Node's built-in test runner
+React 19 · Vite · Tesseract.js (on-device OCR) · plain CSS (dark mode, mobile-first, large type) · Node's built-in test runner
 
 ## Project structure
 
@@ -67,15 +70,16 @@ src/
   lib/analyzer.js        detection engine
   lib/examples.js        sample scam messages
   lib/share.js           family warning text
-  components/            ResultCard, Highlighted
+  lib/i18n.js            English / Hindi text
+  lib/quiz.js            quiz questions
+  components/            ResultCard, Highlighted, Quiz, ScreenshotUpload
   App.jsx
 tests/analyzer.test.js
 ```
 
 ## Future plans
 
-- Hindi and other regional languages
-- Screenshot upload with on-device OCR
+- More regional languages (Tamil, Bengali, Marathi, Telugu)
 - Browser extension and WhatsApp bot
 - Community-reported scam number/link database
 
