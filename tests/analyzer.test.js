@@ -58,3 +58,24 @@ test('rupee amounts are detected in payment requests', () => {
   const r = analyze('Your parcel is held at customs. Pay ₹499 clearance fee to release it.')
   assert.ok(ids(r).includes('payment'))
 })
+
+test('Hindi KYC scam is detected', () => {
+  const r = analyze('प्रिय ग्राहक, आपका बैंक खाता आज बंद हो जाएगा। तुरंत केवाईसी अपडेट करें: http://sbi-kyc.top/hi')
+  assert.equal(r.level, 'danger')
+  for (const id of ['urgency', 'threat', 'kyc']) assert.ok(ids(r).includes(id), `missing ${id}`)
+})
+
+test('Hindi job scam is detected', () => {
+  const r = analyze('घर बैठे काम करें और रोज़ ₹5000 कमाएं! अभी व्हाट्सएप करें')
+  assert.ok(ids(r).includes('job'))
+  assert.notEqual(r.level, 'safe')
+})
+
+test('Hinglish OTP request is detected', () => {
+  const r = analyze('Sir aapka refund aa gaya hai, jo otp aaya hai wo jaldi bata do')
+  assert.ok(ids(r).includes('credentials'))
+})
+
+test('normal Hindi message is safe', () => {
+  assert.equal(analyze('कल शाम को खाने पर मिलते हैं, मम्मी ने बुलाया है।').level, 'safe')
+})

@@ -9,6 +9,9 @@ const TEXT_RULES = [
       'Scammers rush you so you act before thinking. Real banks and companies give you time.',
     weight: 15,
     patterns: [
+      /(तुरंत|तुरन्त|आज ही|फौरन|जल्दी करें|अंतिम चेतावनी)/,
+      /\b(turant|jaldi karo|aaj hi|abhi karo)\b/i,
+      /\d+\s*(घंटे|घंटों|मिनट)/,
       /\burgent(ly)?\b/i,
       /\bimmediately\b/i,
       /\bact now\b/i,
@@ -26,6 +29,10 @@ const TEXT_RULES = [
       'Threats of arrest, account blocking or disconnection are a classic fear tactic. Police and banks do not threaten people over SMS or WhatsApp.',
     weight: 20,
     patterns: [
+      /(खाता|अकाउंट|सिम|कार्ड|नंबर).{0,25}(बंद|ब्लॉक|निलंबित)/,
+      /(गिरफ्तार|गिरफ़्तार|कानूनी कार्रवाई|वारंट|जुर्माना)/,
+      /(बिजली|कनेक्शन).{0,25}(कट|काट|बंद)/,
+      /\b(account|sim|number)\b.{0,20}\b(band|block) (ho jayega|kar diya)\b/i,
       /\b(account|card|sim|number|kyc)\b.{0,40}\b(blocked|suspended|deactivated|frozen|closed|disabled)\b/i,
       /\b(will be|has been|is) (blocked|suspended|deactivated|disconnected|terminated)\b/i,
       /\barrest(ed)?\b/i,
@@ -43,6 +50,8 @@ const TEXT_RULES = [
       'No genuine bank, app or government office will ever ask for your OTP, PIN, CVV or password. Anyone asking is a scammer.',
     weight: 35,
     patterns: [
+      /(ओटीपी|पिन|पासवर्ड|सीवीवी).{0,20}(बताएं|बताइए|भेजें|शेयर|दें)/,
+      /\b(otp|pin|password)\b.{0,15}\b(bhejo|batao|bata do|share karo|de do)\b/i,
       /\b(share|send|tell|provide|enter|give).{0,25}\b(otp|pin|cvv|password|passcode|verification code)\b/i,
       /\b(otp|cvv|upi pin|atm pin)\b/i,
       /\bnet ?banking (id|password|credentials)\b/i,
@@ -56,6 +65,9 @@ const TEXT_RULES = [
       'Messages asking you to "update KYC", PAN or Aadhaar through a link are one of the most common bank scams in India.',
     weight: 25,
     patterns: [
+      /(केवाईसी|kyc).{0,25}(अपडेट|पूरा|लंबित)/i,
+      /(पैन|आधार).{0,20}(अपडेट|लिंक|सत्यापित)/,
+      /\bkyc\b.{0,15}\b(karo|karein|kare)\b/i,
       /\b(update|complete|verify|re-?verify)\b.{0,20}\b(kyc|pan|aadha?ar|account details)\b/i,
       /\bkyc\b.{0,30}\b(pending|expired|incomplete|update)\b/i,
       /\bverify your (account|identity)\b/i,
@@ -68,6 +80,8 @@ const TEXT_RULES = [
       'You cannot win a lottery or prize you never entered. "Free" rewards are bait to get your money or details.',
     weight: 20,
     patterns: [
+      /(बधाई हो|लॉटरी|इनाम|पुरस्कार|आपने जीत|लकी ड्रा)/,
+      /\b(badhai ho|inaam|aapne jeeta|jeet gaye)\b/i,
       /\b(you('ve| have)? won|winner|congratulations)\b/i,
       /\blottery\b/i,
       /\b(lucky|cash) ?(draw|prize|reward)\b/i,
@@ -83,6 +97,8 @@ const TEXT_RULES = [
       'Being asked to pay a "fee" to receive money, a parcel or a job is always a scam. Never pay strangers via UPI, gift cards or crypto.',
     weight: 25,
     patterns: [
+      /(शुल्क|फीस|भुगतान|रजिस्ट्रेशन चार्ज)/,
+      /\b(paise|payment|fee)\b.{0,15}\b(bhejo|karo|jama karo)\b/i,
       /\b(registration|processing|clearance|customs|delivery|release|security) (fee|charge|deposit)\b/i,
       /\bpay\b.{0,25}(₹|\b(rs\.?|inr|fee|amount|now)\b)/i,
       /\bgift ?cards?\b/i,
@@ -98,6 +114,9 @@ const TEXT_RULES = [
       'Offers of big daily earnings for simple online tasks (liking videos, rating hotels) end with you paying a "deposit" you never get back.',
     weight: 40,
     patterns: [
+      /(घर बैठे|पार्ट टाइम).{0,30}(कमाएं|कमाई|नौकरी|काम)/,
+      /\b(ghar baithe|roz kamao|kamaye|kamaiye)\b/i,
+      /(रोज़?|प्रतिदिन).{0,15}₹?\s?\d/,
       /\b(work|job) from home\b/i,
       /\bpart[- ]?time (job|work|opportunity)\b/i,
       /\bearn\b.{0,25}?(₹|rs\.?|\$)?\s?\d[\d,]*.{0,20}\b(daily|per day|a day|\/day|weekly)\b/i,
@@ -113,6 +132,7 @@ const TEXT_RULES = [
       'Scammers pose as banks, couriers, police, tax offices or big brands. Contact the organisation yourself using its official app or website, not the details in this message.',
     weight: 10,
     patterns: [
+      /(बैंक|पुलिस|सीबीआई|कस्टम|आयकर|डाक विभाग|कूरियर)/,
       /\b(sbi|hdfc|icici|axis bank|kotak|paytm|phonepe|gpay|google pay|bank of baroda|pnb)\b/i,
       /\b(fedex|dhl|blue ?dart|india ?post|courier|parcel|shipment)\b/i,
       /\b(customs|cbi|police|cyber ?cell|narcotics|income ?tax|trai|rbi)\b/i,
@@ -126,6 +146,7 @@ const TEXT_RULES = [
       'Asking you to switch to WhatsApp, Telegram or a personal number lets scammers avoid detection.',
     weight: 10,
     patterns: [
+      /(व्हाट्सएप|टेलीग्राम).{0,15}(करें|पर|मैसेज)/,
       /\b(whatsapp|telegram|signal)\b.{0,20}\b(me|us|on|at|now|group|link)\b/i,
       /\b(call|contact|dial)\b.{0,20}(\+?\d[\d\s-]{8,})/i,
       /\bt\.me\//i,
@@ -139,6 +160,7 @@ const TEXT_RULES = [
       'Screen-sharing apps like AnyDesk or TeamViewer, or an unknown .apk file, let scammers control your phone and empty your bank account.',
     weight: 35,
     patterns: [
+      /(ऐप|एप).{0,15}(डाउनलोड|इंस्टॉल)/,
       /\b(anydesk|teamviewer|quicksupport|rustdesk)\b/i,
       /\.apk\b/i,
       /\b(install|download)\b.{0,25}\b(app|application)\b.{0,25}\b(link|below|this)\b/i,

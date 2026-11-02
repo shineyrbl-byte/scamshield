@@ -21,6 +21,10 @@ export const EXAMPLES = [
     text: 'This is CBI cyber cell. A parcel with drugs was booked in your name. You are under digital arrest. Do not disconnect. Install AnyDesk for verification.',
   },
   {
+    label: '🇮🇳 Hindi KYC',
+    text: 'प्रिय ग्राहक, आपका बैंक खाता आज बंद हो जाएगा। तुरंत केवाईसी अपडेट करें: http://sbi-kyc.top/hi',
+  },
+  {
     label: '✅ Normal message',
     text: 'Hi! Your order #4521 from the bakery is ready for pickup. See you soon.',
   },
