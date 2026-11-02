@@ -4,6 +4,8 @@
 
 Built for **Next Byte Hacks V5**.
 
+**🔗 Live demo: https://shineyrbl-byte.github.io/scamshield/**
+
 ## The problem
 
 Online fraud is exploding. Fake KYC updates, parcel "customs fees", work-from-home job offers and "digital arrest" calls drain people's savings every day. The people hit hardest, elderly parents and first-time internet users, are the least able to tell a fake message from a real one, and often have no one to ask in the moment.
