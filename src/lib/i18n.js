@@ -4,6 +4,8 @@ export const LANGS = { en: 'English', hi: 'हिन्दी' }
 
 const UI = {
   en: {
+    tabCheck: '🔍 Check a message',
+    tabQuiz: '🎯 Spot the scam quiz',
     tagline:
       "Got a strange SMS, WhatsApp message, email or link? Paste it below and we'll tell you if it looks like a scam, in plain language.",
     inputLabel: 'Suspicious message or link',
@@ -32,6 +34,8 @@ const UI = {
     warnLink: 'Check messages yourself:',
   },
   hi: {
+    tabCheck: '🔍 मैसेज जांचें',
+    tabQuiz: '🎯 स्कैम पहचानें क्विज़',
     tagline:
       'कोई अजीब SMS, WhatsApp मैसेज, ईमेल या लिंक मिला है? उसे नीचे पेस्ट करें, हम आसान भाषा में बताएंगे कि यह धोखाधड़ी (स्कैम) तो नहीं।',
     inputLabel: 'संदिग्ध मैसेज या लिंक',

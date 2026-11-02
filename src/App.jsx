@@ -3,10 +3,12 @@ import { analyze } from './lib/analyzer.js'
 import ResultCard from './components/ResultCard.jsx'
 import { EXAMPLES } from './lib/examples.js'
 import { LANGS, ui } from './lib/i18n.js'
+import Quiz from './components/Quiz.jsx'
 
 export default function App() {
   const [text, setText] = useState('')
   const [result, setResult] = useState(null)
+  const [tab, setTab] = useState('check')
   const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en')
   const t = ui(lang)
 
@@ -43,7 +45,24 @@ export default function App() {
         <p>{t.tagline}</p>
       </header>
 
-      <main>
+      <nav className="tabs" role="tablist">
+        {['check', 'quiz'].map((id) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={tab === id}
+            className={tab === id ? 'active' : ''}
+            onClick={() => setTab(id)}
+          >
+            {id === 'check' ? t.tabCheck : t.tabQuiz}
+          </button>
+        ))}
+      </nav>
+
+      {tab === 'quiz' && <Quiz key={lang} lang={lang} />}
+
+      <main hidden={tab !== 'check'}>
         <form className="checker" onSubmit={check}>
           <label htmlFor="msg">{t.inputLabel}</label>
           <textarea
