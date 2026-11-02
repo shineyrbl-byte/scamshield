@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { LEVELS } from '../lib/analyzer.js'
 import { buildWarning, whatsappLink } from '../lib/share.js'
+import Highlighted from './Highlighted.jsx'
 
 const ICONS = { safe: '✅', suspicious: '⚠️', danger: '🚨' }
 
@@ -28,7 +29,7 @@ function Gauge({ score, level }) {
   )
 }
 
-export default function ResultCard({ result }) {
+export default function ResultCard({ result, text }) {
   const { score, level, flags } = result
   const info = LEVELS[level]
   const [copied, setCopied] = useState(false)
@@ -66,6 +67,8 @@ export default function ResultCard({ result }) {
 
       {flags.length > 0 && (
         <>
+          <h3>Suspicious parts of the message</h3>
+          <Highlighted text={text} flags={flags} />
           <h3>Why we think so</h3>
           <ul className="flags">
             {flags.map((f) => (

@@ -73,7 +73,7 @@ export default function App() {
           </div>
         </form>
 
-        {result && <ResultCard result={result} />}
+        {result && <ResultCard result={result} text={text} />}
       </main>
 
       <footer>
