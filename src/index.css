@@ -171,3 +171,9 @@ a.whatsapp:hover { background: #1ebe5a; }
 .quiz-feedback.bad { background: var(--danger-bg); border-left: 4px solid var(--danger); }
 .quiz-score { font-size: 1.6rem; font-weight: 700; }
 [hidden] { display: none !important; }
+
+.upload { display: contents; }
+.upload-btn { cursor: pointer; display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); font-weight: 400; }
+.upload-btn:hover { border-color: var(--primary); }
+.upload-btn.busy { cursor: progress; opacity: 0.8; }
+.upload-error { width: 100%; color: var(--danger); font-size: 0.9rem; }

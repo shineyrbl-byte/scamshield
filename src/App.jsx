@@ -4,6 +4,7 @@ import ResultCard from './components/ResultCard.jsx'
 import { EXAMPLES } from './lib/examples.js'
 import { LANGS, ui } from './lib/i18n.js'
 import Quiz from './components/Quiz.jsx'
+import ScreenshotUpload from './components/ScreenshotUpload.jsx'
 
 export default function App() {
   const [text, setText] = useState('')
@@ -79,6 +80,13 @@ export default function App() {
             <button type="submit" className="primary" disabled={!text.trim()}>
               {t.check}
             </button>
+            <ScreenshotUpload
+              lang={lang}
+              onText={(txt) => {
+                setText(txt)
+                setResult(analyze(txt))
+              }}
+            />
             {text && (
               <button
                 type="button"
