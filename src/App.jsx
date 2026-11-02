@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { analyze } from './lib/analyzer.js'
 import ResultCard from './components/ResultCard.jsx'
+import { EXAMPLES } from './lib/examples.js'
 
 export default function App() {
   const [text, setText] = useState('')
@@ -50,6 +51,25 @@ export default function App() {
                 Clear
               </button>
             )}
+          </div>
+
+          <div className="examples">
+            <p className="muted">No message handy? Try an example:</p>
+            <div className="chips">
+              {EXAMPLES.map((ex) => (
+                <button
+                  key={ex.label}
+                  type="button"
+                  className="chip"
+                  onClick={() => {
+                    setText(ex.text)
+                    setResult(analyze(ex.text))
+                  }}
+                >
+                  {ex.label}
+                </button>
+              ))}
+            </div>
           </div>
         </form>
 

@@ -134,3 +134,9 @@ footer { font-size: 0.85rem; text-align: center; display: flex; flex-direction: 
   :root { font-size: 17px; }
   .result-head { flex-direction: column; text-align: center; }
 }
+
+.examples { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--border); }
+.examples p { font-size: 0.9rem; margin-bottom: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 0.85rem; padding: 6px 12px; border-radius: 999px; background: var(--bg); }
+.chip:hover { border-color: var(--primary); }
