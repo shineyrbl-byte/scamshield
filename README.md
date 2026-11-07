@@ -6,6 +6,8 @@ Built for **Next Byte Hacks V5**.
 
 **🔗 Live demo: https://shineyrbl-byte.github.io/scamshield/**
 
+**🎬 Demo video: https://youtu.be/vig1kl_-IxY**
+
 ## Screenshots
 
 | Instant verdict | Plain-language reasons |
